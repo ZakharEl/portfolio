@@ -1,6 +1,6 @@
 # Final for College Advanced SQL Class
 
-This project will be completed using the MySQL Workbench 8.0 CE software. Using the SQL that you have learned, complete the steps below to create the **MissouriGrills** database along with its tables, queries, views, etc. based on each of the requirements in the steps below. At the end of this document is an Answer section. You will take a snippet of your results in MySQL Workbench for \#7-47 and paste your snippet for each of those steps in the Answer section. For \#48-51, you will not execute the commands. Instead, you will type your commands in this file.
+This project will be completed using the MySQL Workbench 8.0 CE software. Using the SQL that you have learned, complete the steps below to create the **MissouriGrills** database along with its tables, queries, views, etc. based on each of the requirements in the steps below.
 
 1.  Create the **MissouriGrills** database. Be sure to activate (use) this database before moving on to the next step.
 
@@ -59,8 +59,6 @@ This project will be completed using the MySQL Workbench 8.0 CE software. Using 
 | **Item_ID**      | **Char**    | **4**                   | **Primary Key** |
 | Quantity ordered | **Numeric** | (don’t have to specify) |                 |
 | Quoted price     | **Decimal** | **7,2**                 |                 |
-
-3.  
 
 4.  Add the following values to your tables that you created in the previous step. Every box needs to have data. If the box has something in it, use that when you enter the values. If it is empty, you need to come up with the values. You do not need to type them in HERE, just in your commands when you insert the values into the tables.
 
@@ -136,10 +134,6 @@ This project will be completed using the MySQL Workbench 8.0 CE software. Using 
 | 11007        | PT50    | 8                | 4.99         |     |
 | 11008        | GL41    | 1                | 26.99        |     |
 
-5.  
-
-<!-- -->
-
 4.  Confirm that all of your values that you entered match the data in the tables above. This is IMPORTANT so that your future steps will be correct!
 
 5.  Create a table named **Grills**. It should have the following fields:
@@ -155,8 +149,6 @@ This project will be completed using the MySQL Workbench 8.0 CE software. Using 
     1.  CG01, Coyote, Charcoal
 
     2.  BG01, Blaze, Gas
-
-At the end of this document you will find an **Answer Section**. For the remaining steps, you will need to take a snippet of your **Results** and paste them in the table in the column just to the right of the appropriate number. If the list is too long to show all the results (for example, if you can only see 11 fields and there are 20) then just take a snippet of the portion that you can see. You do NOT need to scroll down to take another snippet.
 
 7.  Run the **SELECT \* FROM Grills;** command to verify that the table and values are correct.
 
@@ -249,8 +241,6 @@ Confirm that the table has been created.
 46. Write and execute the command to retrieve the item description, amount on hand, and category of all items with the category Accessory (ACC) from the **LocationB_Items** view.
 
 47. Write in the answer key below the query that the database would actually execute to match the previous question. Hint: you will not use the View. Your results match the results from the previous question.
-
-In the answer section below, **type** (but do not execute on SQL Server) the commands to grant the following privileges.
 
 48. Allow user Stein to retrieve data from the Item table.
 
