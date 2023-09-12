@@ -53,4 +53,5 @@ getfacl calculate-profits
 userdel John
 useradd -g admin -f 28 -M -u 1200 -o -s $(which zsh) Maurian
 exit
+exit
 ```
