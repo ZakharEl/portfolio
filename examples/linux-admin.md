@@ -27,7 +27,7 @@
 
 # Answers
 
-```
+```bash
 ssh -p 4096 Laurel@192.120.0.1
 su
 groupadd financial
