@@ -21,7 +21,7 @@ A centralized log is often found in /etc/syslog or /etc/syslogd.
 su
 journalctl --list-boots
 journalctl -b -23
-cat /var/log/auth.log
+cat /var/log/auth.log | less
 lsblk -o +FSTYPE,PARTLABEL
 mkdir /mnt
 mount /dev/sdb1 /mnt
