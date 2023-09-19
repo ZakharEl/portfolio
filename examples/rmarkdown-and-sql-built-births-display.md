@@ -14,7 +14,7 @@ to use other methods.
 library('DBI')
 con <- dbConnect(RSQLite::SQLite(), dbname = "rmarkdown-and-sql-built-births-display.db")
 birth_data <- read.csv('https://raw.githubusercontent.com/fivethirtyeight/data/master/births/US_births_2000-2014_SSA.csv')
-dbWriteTable(con, "births2000_2014", birth_data)
+dbWriteTable(con, "births2000_2014", birth_data, overwrite = TRUE)
 ```
 
 # Displaying Table in SQL Code Block
