@@ -6,7 +6,8 @@ repository](https://github.com/fivethirtyeight/data/blob/master/births/US_births
 This example uses sqlite 3 but explains what to change to use other
 methods like Azure SQL Database (used by SQL Server Management Studio).
 Really only one line in the following R code block needs to be changed
-to use other methods.
+to use other methods. This github flavored markdown file is generated
+from [this rmarkdown file](rmarkdown-and-sql-built-births-display.rmd).
 
 # Connecting to the SQL Server
 
@@ -17,7 +18,27 @@ birth_data <- read.csv('https://raw.githubusercontent.com/fivethirtyeight/data/m
 dbWriteTable(con, "births2000_2014", birth_data, overwrite = TRUE)
 ```
 
-# Displaying Table in SQL Code Block
+For this example to work one must have DBI and RSQLite R packages
+installed. One also needs to have RSQLite for one’s OS installed too. If
+one is using a different SQL database type then one needs to have that
+installed on their OS and have the appropriately DBI supported R package
+for that type installed as well ([see this for supported DBI backend
+packages](https://dbi.r-dbi.org/)). One would also have to have the
+dbConnect call of line 2 of the above R code block changed to the call
+appropriate for the given database type.
+
+## Example with Azure SQL Database
+
+Change line 2 of the above R code block to the following:
+
+``` r
+con <- dbConnect(AzureKusto::AzureKusto(), server="https://azure-database-url.net",
+database="desired-database", tenantid="appropriate-azure-tenantid")
+```
+
+. Of course AzureKusto R package must be installed as well.
+
+# Displaying Table with SQL Code Block
 
 ``` sql
 SELECT year, month, date_of_month, births FROM births2000_2014
@@ -43,7 +64,7 @@ Displaying records 1 - 10
 
 </div>
 
-\#Disconnecting from the SQL Server
+# Disconnecting from the SQL Server
 
 ``` r
 dbDisconnect(con)
