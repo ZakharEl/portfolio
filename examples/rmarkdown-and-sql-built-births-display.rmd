@@ -1,0 +1,28 @@
+---
+title: "Births from 2000 to 2014"
+output: github_document
+---
+
+Data for this example is taken from [this repository](https://github.com/fivethirtyeight/data/blob/master/births/US_births_2000-2014_SSA.csv). This example uses sqlite 3 but explains what to change to use other methods like Azure SQL Database (used by SQL Server Management Studio). Really only one line in the following R code block needs to be changed to use other methods.
+
+# Connecting to the SQL Server
+
+```{r, attr.source='.numberLines'}
+library('DBI')
+con <- dbConnect(RSQLite::SQLite(), dbname = "rmarkdown-and-sql-built-births-display.db")
+birth_data <- read.csv('https://raw.githubusercontent.com/fivethirtyeight/data/master/births/US_births_2000-2014_SSA.csv')
+dbWriteTable(con, "births2000_2014", birth_data)
+```
+
+# Displaying Table in SQL Code Block
+
+```{sql, connection = con}
+SELECT year, month, date_of_month, births FROM births2000_2014
+WHERE births > 9000;
+```
+
+#Disconnecting from the SQL Server
+
+```{r}
+dbDisconnect(con)
+```
