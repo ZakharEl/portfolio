@@ -33,7 +33,8 @@ database="desired-database", tenantid="appropriate-azure-tenantid")
 # Displaying Table with SQL Code Block
 
 ```{sql, connection = con}
-SELECT * FROM births2000_2014;
+SELECT * FROM births2000_2014
+WHERE births > 4200000;
 ```
 
 # Disconnecting from the SQL Server

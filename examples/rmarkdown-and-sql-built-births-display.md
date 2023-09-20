@@ -44,25 +44,20 @@ database="desired-database", tenantid="appropriate-azure-tenantid")
 # Displaying Table with SQL Code Block
 
 ``` sql
-SELECT * FROM births2000_2014;
+SELECT * FROM births2000_2014
+WHERE births > 4200000;
 ```
 
 <div class="knitsql-table">
 
 | year |  births |
 |:-----|--------:|
-| 2000 | 4149598 |
-| 2001 | 4110963 |
-| 2002 | 4099313 |
-| 2003 | 4163060 |
-| 2004 | 4186863 |
 | 2005 | 4211941 |
 | 2006 | 4335154 |
 | 2007 | 4380784 |
 | 2008 | 4310737 |
-| 2009 | 4190991 |
 
-Displaying records 1 - 10
+4 records
 
 </div>
 
