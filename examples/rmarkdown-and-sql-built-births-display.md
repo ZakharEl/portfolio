@@ -13,23 +13,26 @@ from [this rmarkdown file](rmarkdown-and-sql-built-births-display.rmd).
 
 ``` r
 library('DBI')
+library('reshape')
 con <- dbConnect(RSQLite::SQLite(), dbname = "rmarkdown-and-sql-built-births-display.db")
 birth_data <- read.csv('https://raw.githubusercontent.com/fivethirtyeight/data/master/births/US_births_2000-2014_SSA.csv')
-dbWriteTable(con, "births2000_2014", birth_data, overwrite = TRUE)
+melted_birth_data <- melt(birth_data, id = "year", measure = "births")
+birth_data_by_year <- as.data.frame(cast(melted_birth_data, year~variable, sum))
+dbWriteTable(con, "births2000_2014", birth_data_by_year, overwrite = TRUE)
 ```
 
-For this example to work one must have DBI and RSQLite R packages
-installed. One also needs to have RSQLite for one’s OS installed too. If
-one is using a different SQL database type then one needs to have that
-installed on their OS and have the appropriately DBI supported R package
-for that type installed as well ([see this for supported DBI backend
-packages](https://dbi.r-dbi.org/)). One would also have to have the
-dbConnect call of line 2 of the above R code block changed to the call
-appropriate for the given database type.
+For this example to work one must have DBI, reshape and RSQLite R
+packages installed. One also needs to have RSQLite for one’s OS
+installed too. If one is using a different SQL database type then one
+needs to have that installed on their OS and have the appropriately DBI
+supported R package for that type installed as well ([see this for
+supported DBI backend packages](https://dbi.r-dbi.org/)). One would also
+have to have the dbConnect call of line 3 of the above R code block
+changed to the call appropriate for the given database type.
 
 ## Example with Azure SQL Database
 
-Change line 2 of the above R code block to the following:
+Change line 3 of the above R code block to the following:
 
 ``` r
 con <- dbConnect(AzureKusto::AzureKusto(), server="https://azure-database-url.net",
@@ -41,24 +44,23 @@ database="desired-database", tenantid="appropriate-azure-tenantid")
 # Displaying Table with SQL Code Block
 
 ``` sql
-SELECT year, month, date_of_month, births FROM births2000_2014
-WHERE births > 9000;
+SELECT * FROM births2000_2014;
 ```
 
 <div class="knitsql-table">
 
-| year | month | date_of_month | births |
-|-----:|------:|--------------:|-------:|
-| 2000 |     1 |             1 |   9083 |
-| 2000 |     1 |             3 |  11363 |
-| 2000 |     1 |             4 |  13032 |
-| 2000 |     1 |             5 |  12558 |
-| 2000 |     1 |             6 |  12466 |
-| 2000 |     1 |             7 |  12516 |
-| 2000 |     1 |            10 |  11668 |
-| 2000 |     1 |            11 |  12611 |
-| 2000 |     1 |            12 |  12398 |
-| 2000 |     1 |            13 |  11815 |
+| year |  births |
+|:-----|--------:|
+| 2000 | 4149598 |
+| 2001 | 4110963 |
+| 2002 | 4099313 |
+| 2003 | 4163060 |
+| 2004 | 4186863 |
+| 2005 | 4211941 |
+| 2006 | 4335154 |
+| 2007 | 4380784 |
+| 2008 | 4310737 |
+| 2009 | 4190991 |
 
 Displaying records 1 - 10
 
