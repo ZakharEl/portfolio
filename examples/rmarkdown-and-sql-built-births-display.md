@@ -150,7 +150,8 @@ knitr::kable(my_birth_data)
 | 2014 |             2 |               661677 |          7 |            357476 |                 333542.8 |      4002514 |
 
 ``` r
-ggplot(my_birth_data, aes(x = year, y = total_births)) + geom_point()
+my_birth_data$year = as.Date(my_birth_data$year)
+ggplot(my_birth_data, aes(x = year, y = total_births)) + geom_point() + labs(x = "YEAR", y = "TOTAL BIRHTS") + scale_x_date(date_breaks = "1 year")
 ```
 
 ![](rmarkdown-and-sql-built-births-display_files/figure-gfm/sql-display-1.png)<!-- -->
