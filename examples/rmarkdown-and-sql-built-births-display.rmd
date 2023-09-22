@@ -104,8 +104,7 @@ my_birth_data_total_births <<- append(my_birth_data_total_births, total_births)
 my_birth_data_average_births_per_month <<- append(my_birth_data_average_births_per_month, total_births/12)
 my_birth_data = data.frame(year = unlist(my_birth_data_year), peak_week_day = unlist(my_birth_data_peak_week_day), peak_week_day_births = unlist(my_birth_data_peak_week_day_births), peak_month = unlist(my_birth_data_peak_month), peak_month_births = unlist(my_birth_data_peak_month_births), average_births_per_month = unlist(my_birth_data_average_births_per_month), total_births = unlist(my_birth_data_total_births))
 knitr::kable(my_birth_data)
-my_birth_data$year = as.Date(my_birth_data$year)
-ggplot(my_birth_data, aes(x = year, y = total_births)) + geom_point() + labs(x = "YEAR", y = "TOTAL BIRHTS") + scale_x_date(date_breaks = "1 year")
+ggplot(my_birth_data, aes(x = year, y = total_births)) + geom_point() + labs(x = "YEAR", y = "TOTAL BIRHTS") + scale_x_continuous(name = "YEAR", breaks = my_birth_data$year, labels = as.character(my_birth_data$year))
 ```
 
 # Disconnecting from the SQL Server
