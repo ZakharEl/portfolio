@@ -68,6 +68,7 @@ within R code chunks like shown in the next section.
 # Displaying Data from R Code Chunks
 
 ``` r
+library('ggplot2')
 my_birth_data_peak_week_day = list()
 my_birth_data_peak_week_day_births = list()
 my_birth_data_peak_month = list()
@@ -147,6 +148,12 @@ knitr::kable(my_birth_data)
 | 2012 |             2 |               653369 |          8 |            365501 |                 332853.2 |      3994239 |
 | 2013 |             2 |               653308 |          8 |            356879 |                 330483.3 |      3965800 |
 | 2014 |             2 |               661677 |          7 |            357476 |                 333542.8 |      4002514 |
+
+``` r
+ggplot(my_birth_data, aes(x = year, y = total_births)) + geom_point()
+```
+
+![](rmarkdown-and-sql-built-births-display_files/figure-gfm/sql-display-1.png)<!-- -->
 
 # Disconnecting from the SQL Server
 
