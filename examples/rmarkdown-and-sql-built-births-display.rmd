@@ -102,6 +102,37 @@ my_birth_data_peak_month_births <<- append(my_birth_data_peak_month_births, peak
 total_births = sum(total_births_by_day_of_week)
 my_birth_data_total_births <<- append(my_birth_data_total_births, total_births)
 my_birth_data_average_births_per_month <<- append(my_birth_data_average_births_per_month, total_births/12)
+peak_week_day = list()
+for (d in my_birth_data_peak_week_day) {
+	peak_week_day <<- append(peak_week_day, switch(d,
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday",
+		"Sunday",
+	))
+}
+my_birth_data_peak_week_day = peak_week_day
+peak_month = list()
+for (m in my_birth_data_peak_month) {
+	peak_month <<- append(peak_month, switch(m,
+		"January",
+		"February",
+		"March",
+		"April",
+		"May",
+		"June",
+		"July",
+		"August",
+		"September",
+		"October",
+		"November",
+		"December",
+	))
+}
+my_birth_data_peak_month = peak_month
 my_birth_data = data.frame(year = unlist(my_birth_data_year), peak_week_day = unlist(my_birth_data_peak_week_day), peak_week_day_births = unlist(my_birth_data_peak_week_day_births), peak_month = unlist(my_birth_data_peak_month), peak_month_births = unlist(my_birth_data_peak_month_births), average_births_per_month = unlist(my_birth_data_average_births_per_month), total_births = unlist(my_birth_data_total_births))
 knitr::kable(my_birth_data)
 ggplot(my_birth_data, aes(x = year, y = total_births)) + geom_line() + geom_point() + labs(x = "YEAR", y = "TOTAL BIRHTS") + scale_x_continuous(breaks = my_birth_data$year, labels = as.character(my_birth_data$year))

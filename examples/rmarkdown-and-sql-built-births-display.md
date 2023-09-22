@@ -127,27 +127,58 @@ my_birth_data_peak_month_births <<- append(my_birth_data_peak_month_births, peak
 total_births = sum(total_births_by_day_of_week)
 my_birth_data_total_births <<- append(my_birth_data_total_births, total_births)
 my_birth_data_average_births_per_month <<- append(my_birth_data_average_births_per_month, total_births/12)
+peak_week_day = list()
+for (d in my_birth_data_peak_week_day) {
+    peak_week_day <<- append(peak_week_day, switch(d,
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+    ))
+}
+my_birth_data_peak_week_day = peak_week_day
+peak_month = list()
+for (m in my_birth_data_peak_month) {
+    peak_month <<- append(peak_month, switch(m,
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ))
+}
+my_birth_data_peak_month = peak_month
 my_birth_data = data.frame(year = unlist(my_birth_data_year), peak_week_day = unlist(my_birth_data_peak_week_day), peak_week_day_births = unlist(my_birth_data_peak_week_day_births), peak_month = unlist(my_birth_data_peak_month), peak_month_births = unlist(my_birth_data_peak_month_births), average_births_per_month = unlist(my_birth_data_average_births_per_month), total_births = unlist(my_birth_data_total_births))
 knitr::kable(my_birth_data)
 ```
 
 | year | peak_week_day | peak_week_day_births | peak_month | peak_month_births | average_births_per_month | total_births |
-|-----:|--------------:|---------------------:|-----------:|------------------:|-------------------------:|-------------:|
-| 2000 |             2 |               669284 |          8 |            367893 |                 345042.9 |      4140515 |
-| 2001 |             2 |               665152 |          8 |            369383 |                 341941.7 |      4103300 |
-| 2002 |             2 |               673346 |          8 |            366409 |                 340948.8 |      4091386 |
-| 2003 |             2 |               690008 |          7 |            370236 |                 346262.7 |      4155152 |
-| 2004 |             2 |               692084 |          7 |            365380 |                 348221.5 |      4178658 |
-| 2005 |             2 |               698828 |          8 |            376467 |                 350385.3 |      4204624 |
-| 2006 |             3 |               714113 |          8 |            394199 |                 360668.1 |      4328017 |
-| 2007 |             2 |               718391 |          8 |            396355 |                 364455.2 |      4373462 |
-| 2008 |             2 |               715084 |          7 |            380707 |                 358560.2 |      4302723 |
-| 2009 |             2 |               705056 |          7 |            373491 |                 348570.5 |      4182846 |
-| 2010 |             2 |               677758 |          9 |            355887 |                 337342.0 |      4048104 |
-| 2011 |             2 |               668543 |          8 |            364194 |                 333304.5 |      3999654 |
-| 2012 |             2 |               653369 |          8 |            365501 |                 332853.2 |      3994239 |
-| 2013 |             2 |               653308 |          8 |            356879 |                 330483.3 |      3965800 |
-| 2014 |             2 |               661677 |          7 |            357476 |                 333542.8 |      4002514 |
+|-----:|:--------------|---------------------:|:-----------|------------------:|-------------------------:|-------------:|
+| 2000 | Tuesday       |               669284 | August     |            367893 |                 345042.9 |      4140515 |
+| 2001 | Tuesday       |               665152 | August     |            369383 |                 341941.7 |      4103300 |
+| 2002 | Tuesday       |               673346 | August     |            366409 |                 340948.8 |      4091386 |
+| 2003 | Tuesday       |               690008 | July       |            370236 |                 346262.7 |      4155152 |
+| 2004 | Tuesday       |               692084 | July       |            365380 |                 348221.5 |      4178658 |
+| 2005 | Tuesday       |               698828 | August     |            376467 |                 350385.3 |      4204624 |
+| 2006 | Wednesday     |               714113 | August     |            394199 |                 360668.1 |      4328017 |
+| 2007 | Tuesday       |               718391 | August     |            396355 |                 364455.2 |      4373462 |
+| 2008 | Tuesday       |               715084 | July       |            380707 |                 358560.2 |      4302723 |
+| 2009 | Tuesday       |               705056 | July       |            373491 |                 348570.5 |      4182846 |
+| 2010 | Tuesday       |               677758 | September  |            355887 |                 337342.0 |      4048104 |
+| 2011 | Tuesday       |               668543 | August     |            364194 |                 333304.5 |      3999654 |
+| 2012 | Tuesday       |               653369 | August     |            365501 |                 332853.2 |      3994239 |
+| 2013 | Tuesday       |               653308 | August     |            356879 |                 330483.3 |      3965800 |
+| 2014 | Tuesday       |               661677 | July       |            357476 |                 333542.8 |      4002514 |
 
 ``` r
 ggplot(my_birth_data, aes(x = year, y = total_births)) + geom_line() + geom_point() + labs(x = "YEAR", y = "TOTAL BIRHTS") + scale_x_continuous(breaks = my_birth_data$year, labels = as.character(my_birth_data$year))
