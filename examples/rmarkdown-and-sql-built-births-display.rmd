@@ -136,6 +136,8 @@ my_birth_data_peak_month = peak_month
 my_birth_data = data.frame(year = unlist(my_birth_data_year), peak_week_day = unlist(my_birth_data_peak_week_day), peak_week_day_births = unlist(my_birth_data_peak_week_day_births), peak_month = unlist(my_birth_data_peak_month), peak_month_births = unlist(my_birth_data_peak_month_births), average_births_per_month = unlist(my_birth_data_average_births_per_month), total_births = unlist(my_birth_data_total_births))
 knitr::kable(my_birth_data)
 ggplot(my_birth_data, aes(x = year, y = total_births)) + geom_line() + geom_point() + labs(x = "YEAR", y = "TOTAL BIRHTS") + scale_x_continuous(breaks = my_birth_data$year, labels = as.character(my_birth_data$year))
+peak_month_occurences = as.data.frame(table(my_birth_data$peak_month))
+ggplot(my_birth_data, aes(x = peak_month)) + labs(x = "PEAK BIRTH MONTH OF THE YEAR", y = "NUMBER OF YEARS") + geom_bar() + scale_y_continuous(breaks = 1:max(table(my_birth_data$peak_month)))
 ```
 
 # Disconnecting from the SQL Server

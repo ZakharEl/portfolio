@@ -186,6 +186,13 @@ ggplot(my_birth_data, aes(x = year, y = total_births)) + geom_line() + geom_poin
 
 ![](rmarkdown-and-sql-built-births-display_files/figure-gfm/sql-display-1.png)<!-- -->
 
+``` r
+peak_month_occurences = as.data.frame(table(my_birth_data$peak_month))
+ggplot(my_birth_data, aes(x = peak_month)) + labs(x = "PEAK BIRTH MONTH OF THE YEAR", y = "NUMBER OF YEARS") + geom_bar() + scale_y_continuous(breaks = 1:max(table(my_birth_data$peak_month)))
+```
+
+![](rmarkdown-and-sql-built-births-display_files/figure-gfm/sql-display-2.png)<!-- -->
+
 # Disconnecting from the SQL Server
 
 ``` r
