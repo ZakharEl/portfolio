@@ -192,6 +192,12 @@ ggplot(my_birth_data, aes(x = peak_month)) + labs(x = "PEAK BIRTH MONTH OF THE Y
 
 ![](rmarkdown-and-sql-built-births-display_files/figure-gfm/sql-display-2.png)<!-- -->
 
+``` r
+ggplot(my_birth_data, aes(x = peak_week_day)) + labs(x = "PEAK BIRTH WEEK DAY OF THE YEAR", y = "NUMBER OF YEARS") + geom_bar() + scale_y_continuous(breaks = 1:max(table(my_birth_data$peak_week_day)))
+```
+
+![](rmarkdown-and-sql-built-births-display_files/figure-gfm/sql-display-3.png)<!-- -->
+
 # Disconnecting from the SQL Server
 
 ``` r

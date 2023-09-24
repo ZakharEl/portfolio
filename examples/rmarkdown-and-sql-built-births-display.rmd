@@ -137,6 +137,7 @@ my_birth_data = data.frame(year = unlist(my_birth_data_year), peak_week_day = un
 knitr::kable(my_birth_data)
 ggplot(my_birth_data, aes(x = year, y = total_births)) + geom_line() + geom_point() + labs(x = "YEAR", y = "TOTAL BIRHTS") + scale_x_continuous(breaks = my_birth_data$year, labels = as.character(my_birth_data$year))
 ggplot(my_birth_data, aes(x = peak_month)) + labs(x = "PEAK BIRTH MONTH OF THE YEAR", y = "NUMBER OF YEARS") + geom_bar() + scale_y_continuous(breaks = 1:max(table(my_birth_data$peak_month)))
+ggplot(my_birth_data, aes(x = peak_week_day)) + labs(x = "PEAK BIRTH WEEK DAY OF THE YEAR", y = "NUMBER OF YEARS") + geom_bar() + scale_y_continuous(breaks = 1:max(table(my_birth_data$peak_week_day)))
 ```
 
 # Disconnecting from the SQL Server
