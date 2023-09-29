@@ -39,6 +39,6 @@ Title says it all.
 
 Some software I wrote in C++. I in their source code I display ample knowledge of pointers, TCP, sockets and server and client model - amoung other things. I also show my problem solving skills since the libraries I used had some undocumented and poorly documented functions.
 
-### [Soon to Come Rust Libraries and Software](examples/rust.md)
+### [Soon to Come Rust Libraries and Software with Some Pseudocode Explanations](examples/rust.md)
 
 Description of Rust software as well as the libraries to be used in the software.
