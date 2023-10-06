@@ -15,14 +15,16 @@ stl[SNIPPET TYPES LIBRARY] --> |uses| sbl[SNIPPET BODY LIBRARY]
 
 ## SNIPPET BODY LIBRARY
 
-Defines the structure of a snippet. Essentially provides a rust struct called Snippet, a rust enum called Segment and several other structs. The enum Segment defines every general type of portion that can comprise a snippet. For example, in addition to regular text there is also tabs (user inputted text) and code (program inputted text) - amoung other types. Snippet is essentially a collection of Segment vecs. The several other structs are typically used within the Segment enum variants. For example, the Tab and Code structs are used within the Code and Tab variants. Also the Code and Tab structs have different types as specified by their interpreter and field field respectively. These fields are trait objects so as to allow the users of this library to specify their own type of Tab and Code structs - future proofing this library. Lastly Code struct and the several other structs that are used withing the Segment enum variants (with the exception of Tab) are conditionally compiled based on feature flags.
+Defines the structure of a snippet. Essentially provides a rust struct called Snippet, a rust enum called Segment and several other structs. The enum Segment defines every general type of portion that can comprise a snippet. For example, in addition to regular text there is also tabs (user inputted text) and code (program inputted text) - amoung other types. Snippet is essentially a collection of Segment vecs. The several other structs are typically used within the Segment enum variants. For example, the Tab and Code structs are used within the Code and Tab variants. Also the Code and Tab structs have different types as specified by their interpreter and field field respectively. These fields are trait objects so as to allow the users of this library to specify their own type of Tab and Code structs - future proofing this library. Lastly Code struct and the several other structs that are used withing the Segment enum variants (with the exception of Tab and Text) are conditionally compiled based on feature flags.
 
 ```mermaid
 erDiagram
 Snippet ||--o{ Segment : "is made of"
 Segment ||--o| Tab : "is possibly"
+Segment ||--o| Text : "is possibly just plain"
 Segment ||--o| Code : "is possibly"
 Segment {
+	variant Text
 	variant Tab
 	variant Code
 	variant others

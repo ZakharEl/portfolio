@@ -27,6 +27,10 @@ Where to and how to check logs.
 
 Listing, adding and removing of users, groups and file permissions. Also setting of permissions of a file, permissions both the standard file permissions and ACLs.
 
+## [Making Backups](examples/backups.md)
+
+Title says it all.
+
 ## Scripting
 
 ### [Some Bash Scripts as Custom Software and for Automation](examples/scripting.md)
