@@ -58,7 +58,7 @@ tar command on unix can be used to do full, incremental and differential backups
 4. Some time has passed, make a differential backup
 5. Restore to the last incremental backup
 6. Oops, the file version you wanted was in another incremental backup. Restore the first incremental backup
-7 Some time has passed, restore to the only differential backup
+7. Some time has passed, restore to the only differential backup
 
 For all the backups performed above they will:
 
@@ -68,7 +68,7 @@ For all the backups performed above they will:
 4. have an indication of whether they are a full, incremental or differential backup in their base file name
 5. have a time stamp in base file name indicating year, month, day, hour, minute and second they were made
 
-Furthermore, the meta files of the backups shall have the same requirements above with the exception that only the differential backup meta files shall have a time stamp indicating when they were made. Lastly the backup up files must be gzip compressed and be created with the verbose or v flag of the tar command.
+Furthermore, the meta files of the backups shall have the same requirements above with the exception that only the differential backup meta files shall have a time stamp indicating when they were made. The shell being used is zsh. Lastly the backup up files must be gzip compressed and be created with the verbose or v flag of the tar command.
 
 file: backup-helper-functions.sh
 ```bash
@@ -216,3 +216,5 @@ set_backup_locations backups/my-scripts .config/my-scripts
 find_newest_full_backup
 restore_diff_backup 1
 ```
+
+The above was tested and works on the latest arch linux version and zsh version 5.9. This will likely differ in functionality between Unix OSes since the commands in the above examples lack some options in on Unix OS and command version while also posssessing different flags the other(s) don't have. For example, the z option of sort and tail command is lacking in Mac OS 
