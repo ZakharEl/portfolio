@@ -173,8 +173,7 @@ restore_diff_backup() {
 	[ "$DIFF_BACKUP_FILE" ] || {
 		local DIFF_PLURALITY='backup'
 		[ $1 -gt 1 ] && DIFF_PLURALITY="$DIFF_PLURALITY"s
-		echo "There is no differential backup based on $FULL_BACKUP_FILE $1 $DIFF_PLURALITY away!"
-		echo "WHat $DIFF_BACKUP_FILES $INCR_BACKUP_FILES"
+		echo "There is no differential backup based on $FULL_BACKUP_FILE $1 $DIFF_PLURALITY away!" >&2
 		return 1
 	}
 	tar -xvzf "$DIFF_BACKUP_FILE" -g /dev/null "$BACKUP_RESTORE"
