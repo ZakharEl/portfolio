@@ -216,4 +216,36 @@ find_newest_full_backup
 restore_diff_backup 1
 ```
 
-The above was tested and works on the latest arch linux version and zsh version 5.9. This will likely differ in functionality between Unix OSes since the commands in the above examples lack some options in on Unix OS and command version while also posssessing different flags the other(s) don't have. For example, the z option of sort and tail command is lacking in Mac OS 
+The above was tested and works on the latest arch Linux version and zsh version 5.9. This will likely differ in functionality between Unix OSes since the commands in the above examples lack some options in on Unix OS and command version while also posssessing different flags the other(s) don't have. For example, the z option of sort and tail command is lacking in Mac OS
+
+# Backups in Windows
+
+Several approaches exist for backup in Windows as well.
+
+## dd
+
+Although the script shown in the **dd** subsection of the **BACKUPS IN UNIX** above can be run only on unix platforms it can be used to copy an entire hard drive that has Windows on it! Just make sure to not have both the old and new hard drive running at the same time. Also problems might arrive if the hard drive you are copying from is bigger than the one you are restoring to. Any ISO disk images of Windows are not bootable but they can be used to restore to a hard the system in full. That hard drive would then boot.
+
+## FILE HISTORY
+
+Open **settings** in Windows. Click on the **Updates and Security**. In left pane click on **Backup**. Connect external hard drive or ssd to computer. Click on **Add a drive** under the main section titled **Backup**. To include filed and folders right under where **Add a drive** was click more options. Then click on **Add a folder** under the **back up these folders**. Finally select what folder or file you want backed up. The file and folders to exclude and time interval for the backups can also be changed under **Backup options**. To resore files and folders with file history one can restore it from the **file explorer** or **Control Panel**.
+
+To restore files and folders with file history in the **file explorer** have the file of folder location opened up in **file explorer** and click it once. Then click the **home** tab of the ribbon at the top and click on **history** in the resulting drop down panel. Click on left and right arrows to view the file as it was backwards and forwards in time of available backups. Click the green center button between the left and right arrows to confirm this as the version you want. Finally double click **Replace the file in the destination**.
+
+To restore files and folders with file history in the **Control Panel** open **Control Panel**. Click on **File History**. In the left pane click **Restore personal files**. Click on left and right arrows to view the available backups backwards and forward in time. Then click the file you want and click the the green center button between the left and right arrows to confirm this as the version you want. Finally double click **Replace the file in the destination**.
+
+## BACKUP AND RESTORE
+
+**Backup and Restore** is used to create a system image like **dd** described aboved. It is a good option to backup the an entire Windows installation for restoring the installation in its entirety.
+
+To perform the backup part of Backup and Restore open **Settings**. Click **Update and Security**. Click **Backup** in the left panel. Click **Go to Backup and Restore (Windows 7)**. Click **Create a system image** in the left panel. Select the desired location to backup the system (in the form of a system image) and then click **Next**. Finally make sure everything is correct and click **Start backup**.
+
+One can perform the restore part of Backup and Restore in a number of ways. One is to select the **Repair your computer option** after booting from a Windows installation ISO. Another is from within **Advanced startup**. To get to **Advanced startup** open **Settings**. Click **Go to Backup and Restore (Windows 7)**. Next click **Restart now** under **Advance startup**. From within **Advanced startup** select **Troubleshoot**. Next click **Advanced options**. Click **System Image Recovery** (**See more recovery options**). Select your user account and then enter your passsword. Make sure the information presented in the **Select a system image backup** is correct. If not enter the correct information. Next click **Select a system image**. click **Next**. Select the appropriate system image location and then click **Next**. After that select the correct date and time of the backup. Make sure you don't need any additional options in this step for things like (re)formatting the drive of installation of any drivers. Perform the additional options if needed then click **Next**. Click **Finish**. Finally Click **Yes**.
+
+## GROUP POLICY OBJECT
+
+Using a **GPO** (group policy object) is a good option when backing up files to multiple computer within an AD (Active Directory) Domain and only 1 or a handful of administrators will alter or add to the backup files in question. An example would to automate installation of some programs to many computer. Everyone must have the appropriate permissions for this to work. Open **Group Policy Management**. Right click **Group Policy Objects** and select **New**. Give it an appropriate name and then click **Ok**. Right click the policy object that was just created and click **Edit**. Expand **Computer Configuration**, **Preferences**, and finally **Windows settings**. Right click **Files**. Click **New** and then **File**. Under **Source file(s):** enter the network share that the computers to restore to have access to. Under **Destination File:** enter the location on each of the computers you would like to restore it to. Click **Ok**. Close the policy object. In **Group Policy Management** right click the OU (Organizational Unit) of the computers you wish to restore to. Select **Link an Existing GPO**. Finally select the GPO created earlier and click **Ok**. Either wait for the GPO to automatically take effect (typically 90 minutes) or run GPupdate /force on the command line.
+
+## OTHER METHODS
+
+Some other methods exist for creating backups for Windows systems. Largely ones using powershell or bash scripts with some cli tools. In Windows cli tools like robocopy, xcopy and Copy-Item could be used with Get-Date for timestamps and gzip for backup compressions. ActiveDirectory module would also be best to use. adtool on Linux could be used to interact with active director in Linux for Windows systems. If I explained more of these in detail I might actually hurt my chances at getting a job.
