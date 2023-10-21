@@ -248,4 +248,4 @@ Using a **GPO** (group policy object) is a good option when backing up files to 
 
 ## OTHER METHODS
 
-Some other methods exist for creating backups for Windows systems. Largely ones using powershell or bash scripts with some cli tools. In Windows cli tools like robocopy, xcopy and Copy-Item could be used with Get-Date for timestamps and gzip for backup compressions. ActiveDirectory module would also be best to use. adtool on Linux could be used to interact with active director in Linux for Windows systems. If I explained more of these in detail I might actually hurt my chances at getting a job.
+Some other methods exist for creating backups for Windows systems. Largely ones using powershell or bash scripts with some cli tools. In Windows cli tools like robocopy, xcopy and Copy-Item could be used with Get-Date for timestamps and gzip for backup compressions. ActiveDirectory module would also be best to use. adtool on Linux could be used to interact with active director in Linux for Windows systems. If I explained more of these in detail I might actually hurt my chances at getting a job. If you want automated backups, hire me!
