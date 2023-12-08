@@ -275,6 +275,7 @@ mkdir /nginx-site
 
 ```sh
 semanage fcontext -a -t httpd_sys_content_t '/nginx-site/site(/.*)?'
+```
 
 **96.** Run
 
