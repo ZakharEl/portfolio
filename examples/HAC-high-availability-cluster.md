@@ -544,13 +544,13 @@ vim /mnt/site/index.html
 .
 
 **149.** Add the following lines:
-> <html>
-> <head>
-> </head>
-> <body>
-> 	<p>This is running with pacemaker.</p>
-> </body>
-> </html>
+> \<html>
+> \<head>
+> \</head>
+> \<body>
+> 	\<p>This is running with pacemaker.\</p>
+> \</body>
+> \</html>
 .
 
 **150.** Save and exit vim.
@@ -686,13 +686,13 @@ pcs constraint order nginx_vip then nginx
 curl 192.168.100.15
 ```
 from either **pacemaker-iscsi**, **pacemaker-main** or **pacemaker-clone1** should give
-> <html>
-> <head>
-> </head>
-> <body>
-> 	<p>This is running with pacemaker.</p>
-> </body>
-> </html>
+> \<html>
+> \<head>
+> \</head>
+> \<body>
+> 	\<p>This is running with pacemaker.\</p>
+> \</body>
+> \</html>
 .
 
 **172.** Placing either of the pacemaker nodes on standby but not both should have the services restart on the other nodes.
