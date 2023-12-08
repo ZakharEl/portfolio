@@ -148,21 +148,26 @@ Most of the rest of the following instructions under this section (Fedora Server
 **57.** Enter **root** for user name and the *password you chose above (Fedora Server Installation)*.
 
 **58.** Run
+
 ```sh
 vim /etc/hosts
 ```
+
 .
 
 **59.** Type **Go** and then add the following:
 > choose-an-ip pacemaker-main
 > choose-an-ip pacemaker-clone1
 > choose-an-ip pacemaker-iscsi
+
 where each of the *choose-an-ip*s will be unique and within the *choosen range starting IP*.
 The following steps use **192.168.100.12**, **192.168.100.13** and **192.168.100.14** for the *choose-an-ip* of pacemaker-main, pacemaker-clone1 and pacemaker-iscsi.
-So the actual lines that should be added if this example is followed is
+So the actual lines that should be added if this example is followed is:
+
 > 192.168.100.12 pacemaker-main
 > 192.168.100.13 pacemaker-clone1
 > 192.168.100.14 pacemaker-iscsi
+
 .
 If however you have different ip network and/or choosen IPs these will differ.
 
@@ -173,9 +178,11 @@ If however you have different ip network and/or choosen IPs these will differ.
 **62.** Press the **enter key** to exit vim.
 
 **63.** Run
+
 ```sh
 firewall-cmd --permanent --add-port=3260/tcp
 ```
+
 .
 
 # Making a Clone of the Server for ISCSI
@@ -241,67 +248,88 @@ firewall-cmd --permanent --add-port=3260/tcp
 **91.** Log in on the **fedora server**.
 
 **92.** Run
+
 ```sh
 yum install pcs pacemaker nginx corosync iscsi*
 ```
+
 .
 
 **93.** Run
+
 ```sh
 ls -lZ /var/www
 ```
+
 and take note that selinux type context of the html directory is **httpd_sys_content_t**.
 
 **94.** Run
+
 ```sh
 mkdir /nginx-site
 ```
+
 .
 
 **95.** Run
+
 ```sh
 semanage fcontext -a -t httpd_sys_content_t '/nginx-site/site(/.*)?'
 
 **96.** Run
+
 ```sh
 firewall-cmd --permanent --add-service=http
 ```
+
 .
 
 **97.** Run
+
 ```sh
 firewall-cmd --permanent --zone=public --add-service=http
 ```
+
 .
 
 **98.** Run
+
 ```sh
 firewall-cmd --permanent --add-service=https
 ```
+
 .
 
 **99.** Run
+
 ```sh
 firewall-cmd --permanent --zone=public --add-service=https
 ```
+
 .
 
 **100.** Run
+
 ```sh
 semanage boolean --modify --on httpd_can_network_relay
 ```
+
 .
 
 **101.** Run
+
 ```sh
 semanage boolean --modify --on httpd_can_network_connect
 ```
+
 .
 
 **102.** Run
+
 ```sh
 vim /etc/nginx/nginx.conf
 ```
+
 .
 
 **103.** Add the following nested indented lines to to the http server block:
@@ -313,34 +341,43 @@ vim /etc/nginx/nginx.conf
 **104.** Save and exit vim.
 
 **105.** Run
+
 ```sh
 vim /usr/bin/mount-nginx-volume
 ```
+
 .
 
 **106.** Add the lines:
+
 ```sh
 #!/usr/bin/bash
 vgchange -a y nginx_vg
 mount /dev/nginx_vg/nginx_lv /nginx-site
 ```
+
 .
 
 **107.** Save and exit vim.
 
 **108.** Run
+
 ```sh
 chmod +x /usr/bin/mount-nginx-volume
 ```
+
 .
 
 **109.** Run
+
 ```sh
 vim /etc/systemd/system/mount-nginx-volume.service
 ```
+
 .
 
 **110.** Add the lines:
+
 ```toml
 [Unit]
 Description=Activate ISCSI volume group and mount nginx logical volume
@@ -351,22 +388,27 @@ After=iscsid.service
 ExecStart=/usr/bin/mount-nginx-volume
 Type=simple
 ```
+
 .
 
 **111.** Save and exit vim.
 
 **112.** Run
+
 ```sh
 passwd hacluster
 ```
+
 and set your choosen password.
 
 **113.** On both **pacemaker-main** and **pacemaker-clone1** run
+
 ```sh
 systemctl enable --now pcsd
 systemctl property set stonith-enabled=false
 systemctl property set no-quorum-policy=ignore
 ```
+
 
 # Making a Clone of the Server for the Cluster
 
@@ -409,26 +451,32 @@ For **fedora server**, **fedora server clone 1** and **nginx iscsi target** perf
 **129.** Enter **root** for user name and *password you chose above (Fedora Server Installation)* for the password.
 
 **130.** Run
+
 ```sh
 hostnamectl set-hostname appropriate-hostname
 ```
+
 .
 For **fedora server** *appropriate-hostname* will be **pacemaker-main**.
 For **fedora server clone 1** *appropriate-hostname* will be **pacemaker-clone1**.
 For **nginx iscsi target** *appropriate-hostname* will be **pacemaker-iscsi**.
 
 **131.** Run
+
 ```sh
 ip addr
 ```
+
  to get the network interface name of your virtual ethernet interface name.
  The ethernet name will begin with en and will be at the start of 1 of the lines lacking indention.
  It will occur immmediately after the starting number and colon.
 
 **132.** Run
+
 ```sh
 nmcli con mod your-network-interface ipv4.addresses choose-an-ip/choose-a-cidr-netmask
 ```
+
 .
 Where *your-network-interface* is the interface gotten from the step directly above, *choose-an-ip* is an IP within your *choosen range starting IP* of step 5 and *choose-a-cidr-netmask* is *choosen cidr net mask* of step 5.
 Also *choose-an-ip* must be uniqe for **fedora server**, **fedora server clone 1** and **nginx iscsi target**.
@@ -437,30 +485,38 @@ All the following commands will use **192.168.100.12**, **192.168.100.13** and *
 Otherwise step **59** should have different lines for addding to the **/etc/hosts** file that correspond to each of the IPs choosen (each *choose-an-ip*).
 
 **133.** Run
+
 ```sh
 nmcli con mod your-network-interface ipv4.gateway choose-an-ip-plus-one
 ```
+
 .
 Where *choose-an-ip-plus-one* is *choosen range starting IP* of step 5 with 1 add to it (in a arithmetic sense).
 
 **134.** Run
+
 ```sh
 nmcli con mod your-network-interface ipv4.dns dns-server-ip
 ```
+
 .
 Where *dns-server-ip* is the IP of your prefered or needed DNS.
 A DNS (Domain Name Server) is a server responsable for translating domains, basically human understandable website names (like www.google.com), into IP addresses that the computer understands.
 
 **135.** Run
+
 ```sh
 nmcli con mod your-network-interface ipv4.method manual
 ```
+
 .
 
 **136.** Finally run
+
 ```sh
 nmcli con up your-network-interface
 ```
+
 .
 
 # Setting Up the Raid 10 Logical Volume for Nginx
@@ -473,9 +529,11 @@ nmcli con up your-network-interface
 **139.** Log in on the **nginx iscsi target**.
 
 **140.** Run
+
 ```sh
 lsblk -o +FSTYPE,LABEL
 ```
+
 to get locations of the **nginx physical volume 1** through **4**.
 They should be in the form of **sd**_x_, where x is a letter.
 These should be **sdb**, **sdc**, **sdd** and **sde**.
@@ -483,64 +541,82 @@ These should be **sdb**, **sdc**, **sdd** and **sde**.
 **141.** For each of the **nginx physical volumes** format them as a physical volume (in volume management terms).
 The location of a **nginx physical volume** should be **/dev/**_location of nginx physical volume in step above_.
 Thus, assuming the locations are **sdb**, **sdc**, **sdd** and **sde** run:
+
 ```sh
 pvcreate /dev/sdb
 pvcreate /dev/sdc
 pvcreate /dev/sdd
 pvcreate /dev/sde
 ```
+
 .
 If the location for any of the **nginx physical volumes** differ, like say instead of **sdb** it is **sdh** replace the corresponding command using **/dev/sd**_x_ with the appropriate location (in this case
+
 ```sh
 pvcreate /dev/sdh
 pvcreate /dev/sdc
 pvcreate /dev/sdd
 pvcreate /dev/sde
 ```
+
 ).
 The same is said of any of the command below that use **/dev/sd**_x_.
 The commands/examples below will all use **sdb**, **sdc**, **sdd** and **sde**.
 
 **142.** Run
+
 ```sh
 vgcreate --setautoactivation n nginx_vg /dev/sdb /dev/sdc /dev/sdd /dev/sde
 ```
+
 .
 
 **143.** Run
+
 ```sh
 lvcreate -l 25%FREE -n nginx_lv nginx_vg
 ```
+
 .
 
 **144.** Run
+
 ```sh
 vgchange -a y nginx_vg
 ```
+
 .
 
 **145.** Run
+
 ```sh
 mkfs.btrfs /dev/nginx_vg/nginx_lv
 ```
+
 .
 
 **146.** Run
+
 ```sh
 mount /dev/nginx_vg/nginx_lv /mnt
 ```
+
 .
 
 **147.** Run
+
 ```sh
 mkdir /mnt/site
 ```
+
 .
 
 **148.** Run
+
 ```sh
 vim /mnt/site/index.html
 ```
+
 .
 
 **149.** Add the following lines:
@@ -556,21 +632,27 @@ vim /mnt/site/index.html
 **150.** Save and exit vim.
 
 **151.** Run
+
 ```sh
 chcon -t httpd_sys_content_t /mnt/site /mnt/site/index.html
 ```
+
 .
 
 **152.** Run
+
 ```sh
 umount /mnt
 ```
+
 .
 
 **153.** Run
+
 ```sh
 vgchange -a n nginx_vg
 ```
+
 .
 
 # Setting Up ISCSI Initiators/Clients
@@ -579,15 +661,19 @@ vgchange -a n nginx_vg
 **154.** Start both **pacemaker-main** and **pacemaker-clone1**.
 
 **155.** In both **pacemaker-main** and **pacemaker-clone1** run
+
 ```sh
 systemctl enable --now iscsid
 ```
+
 .
 
 **156.** In both **pacemaker-main** and **pacemaker-clone1** run
+
 ```sh
 cat /etc/iscsi/initiatorname.iscsi
 ```
+
 and it will output InitiatorName=*iqn*.
 Note the *iqn* of each of the 2 as it is needed latter
 
@@ -597,24 +683,31 @@ Note the *iqn* of each of the 2 as it is needed latter
 **157.** Switch to **pacemaker-iscsi**.
 
 **158.** Run
+
 ```sh
 yum install targetcli
 ```
+
 .
 
 **159.** Run
+
 ```sh
 systemctl enable --now target
 ```
+
 .
 
 **160.** Run
+
 ```sh
 targetcli
 ```
+
 .
 
 **161.** Run
+
 ```sh
 backstores/block create vol1 /dev/sdb
 backstores/block create vol2 /dev/sdc
@@ -623,38 +716,47 @@ backstores/block create vol4 /dev/sde
 iscsi create
 ls
 ```
+
 .
 Note the resulting iqn listed under iscsi.
 
 **162.** Run
+
 ```sh
 iscsi/iqn/tpg1/acls create iqn
 ```
+
 twice (1 for **pacemaker-main** and 1 for **pacemaker-clone1**) where *iqn* is the *iqn* of step **155**.
 
 **163.** Run
+
 ```sh
 iscsi/iqn/tpg1/acls/iqn create 0 /backstores/block/vol1
 iscsi/iqn/tpg1/acls/iqn create 1 /backstores/block/vol2
 iscsi/iqn/tpg1/acls/iqn create 2 /backstores/block/vol3
 iscsi/iqn/tpg1/acls/iqn create 3 /backstores/block/vol4
 ```
+
 twice (1 for **pacemaker-main** and 1 for **pacemaker-clone1**) where *iqn* is the *iqn* of step **155**.
 Don't bother running the **iscsi/iqn/tpg1/acls/**_iqn_ **create 0 /backstores/block/vol**_n_ for the ones that are already autocreated (sometimes some are).
 
 **164.** Run
+
 ```sh
 saveconfig
 exit
 ```
+
 .
 
 **165.** Keep **pacemaker-iscsi** running and switch to both **pacemaker-main** and **pacemaker-clone1**.
 
 **166.** On both **pacemaker-main** and **pacemaker-clone1** run
+
 ```sh
 iscsiadm -m node -T iqn -p 192.168.100.14 -l
 ```
+
 where *iqn* is the *iqn* of step **160**.
 
 # Setting Up Pacemaker
@@ -663,13 +765,16 @@ where *iqn* is the *iqn* of step **160**.
 **167.** Switch to either **pacemaker-main** or **pacemaker-clone1**.
 
 **168.** Run
+
 ```sh
 pcs host auth pacemaker-main pacemaker-clone1
 ```
 
+
 **169.** Enter hacluster for the user name and the *password choosen in step 112* for the password.
 
 **170.** Run
+
 ```sh
 pcs cluster setup nginx pacemaker-main pacemaker-clone1
 pcs cluster start --all
@@ -679,12 +784,15 @@ pcs resource create nginx systemd:nginx
 pcs constraint order stop mount_nginx then nginx
 pcs constraint order nginx_vip then nginx
 ```
+
 .
 
 **171.** Running
+
 ```sh
 curl 192.168.100.15
 ```
+
 from either **pacemaker-iscsi**, **pacemaker-main** or **pacemaker-clone1** should give
 > \<html>
 > \<head>
