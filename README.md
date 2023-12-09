@@ -31,6 +31,12 @@ Listing, adding and removing of users, groups and file permissions. Also setting
 
 Title says it all.
 
+## Super Computers
+
+### [High Availability Cluster with Pacemaker](examples/HAC-high-availability-cluster.md)
+
+A Nginx web server on 2 VM nodes. A 3rd VM is used as the ISCSI server for shared storage with the 2 pacemaker nodes being the pacemaker clients. Raid 10 and Btrfs is used for the shared storage.
+
 ## Scripting
 
 ### [Some Bash Scripts as Custom Software and for Automation](examples/scripting.md)
@@ -42,12 +48,6 @@ Title says it all.
 ### [C++ Software](examples/c++.md)
 
 Some software I wrote in C++. I in their source code I display ample knowledge of pointers, TCP, sockets and server and client model - amoung other things. I also show my problem solving skills since the libraries I used had some undocumented and poorly documented functions.
-
-## Super Computers
-
-### [High Availability Cluster with Pacemaker](examples/HAC-high-availability-cluster.md)
-
-A Nginx web server on 2 VM nodes. A 3rd VM is used as the ISCSI server for shared storage with the 2 pacemaker nodes being the pacemaker clients. Raid 10 and Btrfs is used for the shared storage.
 
 ### [Soon to Come Rust Libraries and Software with Some Pseudocode Explanations](examples/rust.md)
 
