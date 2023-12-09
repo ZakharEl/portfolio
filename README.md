@@ -35,7 +35,7 @@ Title says it all.
 
 ### [High Availability Cluster with Pacemaker](examples/HAC-high-availability-cluster.md)
 
-A Nginx web server on 2 VM nodes. A 3rd VM is used as the ISCSI server for shared storage with the 2 pacemaker nodes being the pacemaker clients. Raid 10 and Btrfs is used for the shared storage.
+A Nginx web server on 2 VM nodes. A 3rd VM is used as the ISCSI server for shared storage with the 2 pacemaker nodes being the ISCSI clients. Raid 10 and Btrfs is used for the shared storage.
 
 ## Scripting
 
