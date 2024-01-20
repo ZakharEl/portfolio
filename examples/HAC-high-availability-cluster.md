@@ -575,7 +575,7 @@ vgcreate --setautoactivation n nginx_vg /dev/sdb /dev/sdc /dev/sdd /dev/sde
 **143.** Run
 
 ```sh
-lvcreate -l 25%FREE -n nginx_lv nginx_vg
+lvcreate -l 25%FREE -n --type raid10 nginx_lv nginx_vg
 ```
 
 .
